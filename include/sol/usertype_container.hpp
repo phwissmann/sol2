@@ -487,12 +487,12 @@ namespace sol {
 			using T = std::remove_pointer_t<meta::unwrap_unqualified_t<container_decay_t<X>>>;
 
 		private:
-			using deferred_uc = usertype_container<X>;
+			using deferred_uc = usertype_container<container_decay_t<X>>
 			using is_associative = meta::is_associative<T>;
 			using is_lookup = meta::is_lookup<T>;
 			using is_ordered = meta::is_ordered<T>;
 			using is_matched_lookup = meta::is_matched_lookup<T>;
-			using iterator = typename T::iterator;
+			using iterator = typename usertype_container_iterator<container_decay_t<X>>::iterator;
 			using sentinel = meta::sentinel_or_t<T, iterator>;
 			using value_type = typename T::value_type;
 			typedef meta::conditional_t<is_matched_lookup::value, std::pair<value_type, value_type>,

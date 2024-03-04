@@ -397,7 +397,7 @@ namespace sol { namespace stack {
 #else
 			// Zzzz slower but necessary thanks to the lower version API and missing functions qq
 			for (lua_Integer i = 0;; i += lua_size<V>::value, lua_pop(L, lua_size<V>::value)) {
-				if (idx >= cont.max_size()) {
+				if (max_size_check(meta::has_max_size<T>(), cont, idx)) {
 					// see above comment
 					goto done;
 				}
@@ -494,7 +494,7 @@ namespace sol { namespace stack {
 #if SOL_LUA_VERSION_I_ >= 503
 			// This method is HIGHLY performant over regular table iteration thanks to the Lua API changes in 5.3
 			for (lua_Integer i = 0;; i += lua_size<V>::value, lua_pop(L, lua_size<V>::value)) {
-				if (idx >= cont.max_size()) {
+					if (max_size_check(meta::has_max_size<C>(), cont, idx)) {
 					goto done;
 				}
 				bool isnil = false;
@@ -517,7 +517,7 @@ namespace sol { namespace stack {
 #else
 			// Zzzz slower but necessary thanks to the lower version API and missing functions qq
 			for (lua_Integer i = 0;; i += lua_size<V>::value, lua_pop(L, lua_size<V>::value)) {
-				if (idx >= cont.max_size()) {
+					if (max_size_check(meta::has_max_size<C>(), cont, idx)) {
 					goto done;
 				}
 				bool isnil = false;
